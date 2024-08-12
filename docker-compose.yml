@@ -1,0 +1,38 @@
+---
+services:
+
+  mariadb:
+    container_name: sql-01
+    image: mariadb:11.4
+    restart: unless-stopped
+    volumes:
+      - /srv/docker/sql-01:/var/lib/mysql
+      - shared-data:/data/backup
+      - ./dump.sh:/dump.sh
+      - ./create_tables.sql:/docker-entrypoint-initdb.d/1.sql
+    environment:
+      MARIADB_ROOT_PASSWORD: toto
+      MARIADB_DATABASE: mydb
+      MARIADB_USER: xav
+      MARIADB_PASSWORD: titi
+    logging:
+      driver: journald
+      options:
+        tag: "sql-01"
+
+  mariadb2:
+    container_name: sql-svg
+    image: mariadb:11.4
+    restart: unless-stopped
+    volumes:
+      - /srv/docker/dbdata2:/var/lib/mysql
+      - shared-data:/data/backup
+      - ./restore.sh:/restore.sh
+    environment:
+      MARIADB_ROOT_PASSWORD: toto
+      MARIADB_DATABASE: mydb
+      MARIADB_USER: xav
+      MARIADB_PASSWORD: titi
+
+volumes:
+  shared-data:
