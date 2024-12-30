@@ -1,5 +1,11 @@
 # Dump and Restore
 
+Ce projet a pour but de créer une sauvegarde d'une base de données via la commande `mariadb-dump` (équivalent à `sql-dump` pour MySql)
+
+Pour cela, on crée deux containers **Docker** qui vont héberger chacun une base de données. 
+
+Puis, avec un Cron, on va régulièrement effectuer un dump de la base de données du premier container, et l'importer dans la base de données du 2e container (qui servira de sauvegarde).
+
 ## Création des Docker containers
 
 Utilisation d'un docker-compose pour créer les containers nécessaires à la réalisation de l'exercice.
